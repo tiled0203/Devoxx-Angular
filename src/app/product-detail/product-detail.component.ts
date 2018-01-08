@@ -16,8 +16,11 @@ export class ProductDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private productService: ProductService) {}
 
   ngOnInit() {
+    this.getProductById();
+  }
+
+  getProductById(){
     let prodId: number = parseInt(this.route.snapshot.params['productId']);
     this.product = this.productService.getProductById(prodId);
   }
-
 }

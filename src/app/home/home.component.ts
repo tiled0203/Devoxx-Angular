@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {Product} from "../shared/product";
 import {ProductService} from "../shared/product.service";
 
@@ -6,7 +6,8 @@ import {ProductService} from "../shared/product.service";
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [ProductService]
 })
 export class HomeComponent implements OnInit {
 
@@ -14,6 +15,12 @@ export class HomeComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
+    // this.getProducts();
+    this.productService.getProducts().then( x => this.products = x);
+  }
+
+  getProducts() {
+    // this.loading = true;
+    // this.productService.getProducts().then( () => this.loading = false);
   }
 }

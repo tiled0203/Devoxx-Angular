@@ -1,21 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Product} from "./product";
 
-
-@Injectable()
-export class ProductService {
-
-  constructor() { }
-  getProducts(): Product[] {
-    return products;
-  }
-
-  getProductById(productId: number): Product {
-    return products.find(p => p.id === productId);
-  }
-}
-
-const products = [
+export const PRODUCTS: Product [] = [
   {
     "id": 0,
     "title": "First Product",
@@ -71,3 +57,37 @@ const products = [
     "categories": ["books"]
   }
 ];
+
+
+@Injectable()
+export class ProductService {
+  results : [] = [];
+  loading: boolean;
+
+  getProducts() {
+    // let promise = new Promise((resolve, reject) => {
+    //   resolve(PRODUCTS);
+    // });
+    //
+    // promise.then(
+    //   res => { // Success
+    //     this.results = res.map(item => {
+    //       return new Product(
+    //         item.id,
+    //         item.title,
+    //         item.price,
+    //         item.rating,
+    //         item.shortDescription,
+    //         item.description,
+    //         item.categories
+    //       );
+    //     });
+    //   });
+    // return promise;
+    return Promise.resolve(PRODUCTS);
+  }
+
+  getProductById(productId: number): Product {
+    return PRODUCTS.find(p => p.id === productId);
+  }
+}

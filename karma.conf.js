@@ -1,33 +1,48 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
+// Karma configuration
+// Generated on Thu Jan 04 2018 15:30:33 GMT+0100 (Romance Standard Time)
 
 module.exports = function (config) {
+  var appBase    = 'src/';       // transpiled app JS and map files
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['mocha', 'chai', 'sinon', '@angular/cli'],
     plugins: [
-      require('karma-jasmine'),
+      require('karma-mocha-reporter'),
       require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-phantomjs-launcher'),
+      require.resolve('karma-mocha'),
+      require.resolve('karma-chai'),
+      require.resolve('karma-sinon'),
       require('@angular/cli/plugins/karma')
     ],
-    client:{
+    client: {
+      builtPaths: [appBase], // add more spec base paths as needed
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
-      reports: [ 'html', 'lcovonly' ],
-      fixWebpackSourcePaths: true
-    },
+    files: [
+      'src/**/*.spec.ts',
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
+      'node_modules/zone.js/dist/proxy.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+    ],
+
     angularCli: {
       environment: 'dev'
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['mocha', 'progress'],
+    mochaReporter: {
+      showDiff: true
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
-  });
+    browsers: ['PhantomJS'],
+    singleRun: false,
+    concurrency: Infinity
+  })
 };
